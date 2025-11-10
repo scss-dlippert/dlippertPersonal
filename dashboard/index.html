@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Stats Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Lines of Code Breakdown</h1>
+  <canvas id="locChart" width="800" height="400"></canvas>
+
+  <script>
+    fetch('tokei_output.json')
+      .then(response => response.json())
+      .then(data => {
+        const languages = Object.keys(data);
+        const codeLines = languages.map(lang => data[lang].code);
+        const commentLines = languages.map(lang => data[lang].comments);
+
+        new Chart(document.getElementById('locChart'), {
+          type: 'bar',
+          data: {
+            labels: languages,
+            datasets: [
+              {
+                label: 'Code',
+                data: codeLines,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)'
+              },
+              {
+                label: 'Comments',
+                data: commentLines,
+                backgroundColor: 'rgba(255, 206, 86, 0.6)'
+              }
+            ]
+          }
+        });
+      });
+  </script>
+</body>
+</html>
