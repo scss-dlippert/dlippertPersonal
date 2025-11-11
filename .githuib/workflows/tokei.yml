@@ -25,3 +25,6 @@ jobs:
       run: |
         tokei -o json > tokei_output.json
         cat tokei_output.json
+        
+        - name: Copy tokei output to dashboard
+      run: cp tokei_output.json dashboard/
